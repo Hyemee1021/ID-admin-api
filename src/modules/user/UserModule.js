@@ -5,3 +5,7 @@ import UserSchema from "./UserSchema.js";
 export const insertUser = (userobj) => {
   return UserSchema(userobj).save();
 };
+
+export const updateUser = (filter, update) => {
+  return UserSchema.findOneAndUpdate(filter, update, { new: true });
+};
