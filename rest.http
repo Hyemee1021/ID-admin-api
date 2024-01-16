@@ -1,0 +1,40 @@
+@rootUrl = http://localhost:8000/api/v1
+
+@userApi = {{rootUrl}}/users
+
+
+
+#====================
+### login user
+POST {{userApi}}/signin
+Content-Type: application/json
+
+{
+"email": "a@a.com",
+"password": "1234Qwer"
+}
+
+
+#====================
+### login user
+GET {{userApi}}
+Authorization: 
+#====================
+### re otp
+POST {{userApi}}/request-otp
+Content-Type: application/json
+
+{
+"email": "a@a.com",
+"password": "1234Qwer"
+}
+
+//==update password
+
+POST {{userApi}}/password
+Content-Type: application/json
+
+{
+"email": "a@a.com",
+"password": "1234Qwer"
+}

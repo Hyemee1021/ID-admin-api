@@ -1,12 +1,11 @@
 import nodemailer from "nodemailer";
-//1smtp configuration
-//2email body
-
-//3send email
+//smtp configuration
+// email body
+// send email
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,
+  port: +process.env.SMTP_PORT,
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
@@ -15,85 +14,143 @@ const transporter = nodemailer.createTransport({
 
 const emailSender = async (obj) => {
   try {
-    // send mail with defined transport object
     const info = await transporter.sendMail(obj);
-    console.log(info);
+
+    console.log("Message sent: %s", info.messageId);
   } catch (error) {
     console.log(error);
   }
 };
 
-export const sendEmailValificationLinkEmail = ({ email, fName, url }) => {
+export const sendEmailVerificationLinkEail = ({ email, fName, url }) => {
   const body = {
-    from: `"International Drinks 👻" <${process.env.SMTP_USER}>`, // sender address
+    from: `"Tech Gare" <${process.env.SMTP_USER}>`, // sender address
     to: email, // list of receivers
-    subject: `Valify your account ✔`, // Subject line
-    text: `Hello, ${fName} from International Drinks`, // plain text body
+    subject: "Follow the instruction to verify your account", // Subject line
+    text: `Hello ${fName}, please follow the link to verify you account ${url} \n\n Regards, Tech Gare`, // plain text body
     html: `
-    
-    
-  <p>Hello ${fName}</p>
-  <br />
-  <br />
-  <p>Thank you for creating an account,click the button below.</p>
-  <p>
+    <p>Hello ${fName}</p>
+<br />
+<br />
+
+<p>thank you for creating account with us. Click the button  to verify your account</p>
+
+<p>
     <a href="${url}">
-      <button style="background:blue; padding:1rem 2rem; color:white; font-weight:bold;">
-      Verify</button>
+    <button style="background: green; padding: 2rem; color: white; font-weight: bolder">Verify</button>
     </a>
-  </p>
-  <br />
-  <br />
+</p>
 
-  ---------------------------
-  <p>
+<br />
+<p>
+   If the above button desn't work, copy paste the folling link in your browser ${url}
+</p>
+<br />
+<br />
+---------
+<p>
     Regards,
-    <br/>
-International Drink
-  </p>
-
-    
-    
-    
+    <br />
+    Tech gare 
+    <br />
+    www.mysite.com
+</p>
+  
     `, // html body
   };
+
   emailSender(body);
 };
 
-export const sendEmailVerifiedNotificationEmail = ({ email, fName }) => {
+export const sendEmailVerifiedNotificationnEmail = ({ email, fName }) => {
   const body = {
-    from: `"International Drinks 👻" <${process.env.SMTP_USER}>`, // sender address
+    from: `"Tech Gare" <${process.env.SMTP_USER}>`, // sender address
     to: email, // list of receivers
-    subject: `Your email has been verified ✔`, // Subject line
-    text: `Greeting 👻, ${fName} from International Drinks`, // plain text body
+    subject: "Your email has been verified", // Subject line
+    text: `Hello ${fName}, You email has been verified. you may login now \n\n Regards, Tech Gare`, // plain text body
     html: `
-    
-    
-  <p>Hello ${fName}</p>
-  <br />
-  <br />
-  <p>Your email has been verified, login now</p>
+    <p>Hello ${fName}</p>
+<br />
+<br />
+
+<p>You email has been verified. you may login now</p>
  
-  <p>
-  <a href=``>
-    <button style="background:blue; padding:1rem 2rem; color:white; font-weight:bold;">
-    logIn</button>
-  </a>
-</p>
-  <br />
-  <br />
-
-  ---------------------------
-  <p>
+<br />
+<br />
+---------
+<p>
     Regards,
-    <br/>
-International Drink
-  </p>
-
-    
-    
-    
+    <br />
+    Tech gare 
+    <br />
+    www.mysite.com
+</p>
+  
     `, // html body
   };
+
+  emailSender(body);
+};
+
+export const sendOtpEmail = ({ email, fName, otp }) => {
+  const body = {
+    from: `"Tech Gare" <${process.env.SMTP_USER}>`, // sender address
+    to: email, // list of receivers
+    subject: "Your OTP for password reset", // Subject line
+    text: `Hello ${fName}, here is your otp ${otp} \n\n Regards, Tech Gare`, // plain text body
+    html: `
+    <p>Hello ${fName}</p>
+<br />
+<br />
+
+<p>Here is the OTP to reset your password</p>
+<p style="font-size:3rem; color: red">${otp}</p>
+
+ 
+<br />
+<br />
+---------
+<p>
+    Regards,
+    <br />
+    Tech gare 
+    <br />
+    www.mysite.com
+</p>
+  
+    `, // html body
+  };
+
+  emailSender(body);
+};
+
+export const passwordUpdateNotificationEmail = ({ email, fName }) => {
+  const body = {
+    from: `"Tech Gare" <${process.env.SMTP_USER}>`, // sender address
+    to: email, // list of receivers
+    subject: "Your password has been updated", // Subject line
+    text: `Hello ${fName}, Your password has been update. If this wasn't you. Pelase contact us or change password asap \n\n Regards, Tech Gare`, // plain text body
+    html: `
+    <p>Hello ${fName}</p>
+<br />
+<br />
+
+<p> Your password has been update. If this wasn't you. Pelase contact us or change password asap</p>
+
+ 
+<br />
+<br />
+---------
+<p>
+    Regards,
+    <br />
+    Tech gare 
+    <br />
+    www.mysite.com
+</p>
+  
+    `, // html body
+  };
+
   emailSender(body);
 };

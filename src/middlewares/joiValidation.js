@@ -15,7 +15,6 @@ const EMAILREQ = EMAIL.required();
 const joiValidator = ({ schema, req, res, next }) => {
   try {
     const { error } = schema.validate(req.body);
-    //error is an object so I need to get further
     if (error) {
       return responder.ERROR({ res, message: error.message });
     }
@@ -34,6 +33,16 @@ export const newAdminValidation = (req, res, next) => {
     phone: SHORTSTR,
     address: SHORTSTR,
     password: SHORTSTR,
+  });
+
+  joiValidator({ schema, req, res, next });
+};
+
+export const resetPasswordValidation = (req, res, next) => {
+  const schema = Joi.object({
+    otp: SHORTSTRREQ,
+    email: EMAILREQ,
+    password: SHORTSTRREQ,
   });
 
   joiValidator({ schema, req, res, next });
